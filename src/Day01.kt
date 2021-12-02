@@ -3,8 +3,7 @@ fun main() {
         return input.asSequence()
             .map { it.toInt() }
             .windowed(windowSize, 1)
-            .map { if (it.first() < it.last()) 1 else 0 }
-            .sum()
+            .count { it.first() < it.last() }
     }
 
     fun part1(input: List<String>): Int = calculateIncreases(input, 2)
