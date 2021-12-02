@@ -6,22 +6,22 @@ fun main() {
         }
 
     fun part1(instructions: List<Pair<String, Int>>): Int {
-        val count = instructions
+        val sums = instructions
             .groupBy({ it.first }, { it.second })
             .mapValues { it.value.sum() }
 
-        return (count.getValue("down") - count.getValue("up")) * count.getValue("forward")
+        return (sums.getValue("down") - sums.getValue("up")) * sums.getValue("forward")
     }
 
     data class State(val position: Int, val depth: Int, val aim: Int) {
-        fun addAim(value: Int): State = this.copy(aim = aim + value)
+        fun aim(value: Int): State = this.copy(aim = aim + value)
         fun moveSubmarine(value: Int): State = this.copy(position = position + value, depth = depth + aim * value)
     }
 
     fun followInstruction(instruction: Pair<String, Int>, state: State): State =
         when (instruction.first) {
-            "down" -> state.addAim(instruction.second)
-            "up" -> state.addAim(-instruction.second)
+            "down" -> state.aim(instruction.second)
+            "up" -> state.aim(-instruction.second)
             "forward" -> state.moveSubmarine(instruction.second)
             else -> state
         }
