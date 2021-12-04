@@ -11,13 +11,12 @@ fun main() {
 
     fun String.toRow(): Row = Row(split(" ").filter { it.isNotBlank() }.map { Number(it.toInt()) })
 
-    fun List<Row>.toColumns(): List<Row> {
+    fun List<Row>.transpose(): List<Row> {
         val columns = toMutableList()
         for (i in 0 until this.size) {
             val numbers = mutableListOf<Number>()
-            for (j in 0 until this.size) {
+            for (j in 0 until this.size)
                 numbers.add(this[j].numbers[i])
-            }
             columns.add(Row(numbers))
         }
 
@@ -27,16 +26,15 @@ fun main() {
     data class Ticket(val rows: List<Row>, var scored: Boolean = false) {
         fun markNumber(drawnNumber: Int) = rows.forEach { it.markNumber(drawnNumber) }
         fun completeRow(): Row? = rows.firstOrNull { it.isComplete() }
-        fun completeColumn(): Row? = rows.toColumns().firstOrNull { it.isComplete() }
+        fun completeColumn(): Row? = rows.transpose().firstOrNull { it.isComplete() }
         fun score(drawnNumber: Int): Int {
             completeRow()?.let { return (rows.sumOf { it.score() }) * drawnNumber }
             completeColumn()?.let { return (rows.sumOf { it.score() }) * drawnNumber }
-
             return 0
         }
     }
 
-    fun List<Ticket>.allScored(): Boolean = all { ticket -> ticket.scored }
+    fun List<Ticket>.allScored(): Boolean = all { it.scored }
 
     fun readNumbers(input: String): List<Int> = input.split(",").map { it.toInt() }
 
