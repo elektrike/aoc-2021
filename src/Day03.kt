@@ -3,9 +3,9 @@ fun main() {
 
     val comparator: Comparator<Map.Entry<Char, Int>> = compareBy({ it.value }, { it.key })
 
-    fun Map<Char, Int>.moreCommonBit(): Char = maxWithOrNull(comparator)!!.key
+    fun Map<Char, Int>.moreCommonBit(): Char = maxWithOrNull(comparator)?.key ?: '1'
 
-    fun Map<Char, Int>.lessCommonBit(): Char = minWithOrNull(comparator)!!.key
+    fun Map<Char, Int>.lessCommonBit(): Char = minWithOrNull(comparator)?.key ?: '0'
 
     fun getGammaRate(report: List<String>): String =
         (0 until report.first().length)
