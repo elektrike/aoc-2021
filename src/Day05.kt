@@ -2,8 +2,8 @@ fun main() {
     data class Point(val x: Int, val y: Int)
 
     data class Line(val from: Point, val to: Point) {
-        fun isHorizontal(): Boolean = from.x == to.x
-        fun isVertical(): Boolean = from.y == to.y
+        fun isVertical(): Boolean = from.x == to.x
+        fun isHorizontal(): Boolean = from.y == to.y
         fun isDiagonal(): Boolean = !isHorizontal() && !isVertical()
     }
 
@@ -27,9 +27,9 @@ fun main() {
             val xs = collectRange(it.from.x, it.to.x)
             val ys = collectRange(it.from.y, it.to.y)
 
-            if (it.isHorizontal())
+            if (it.isVertical())
                 ys.map { y -> Point(xs.first(), y) }.toList()
-            else if (it.isVertical())
+            else if (it.isHorizontal())
                 xs.map { x -> Point(x, ys.first()) }.toList()
             else
                 List(xs.size) { i -> Point(xs[i], ys[i]) }
